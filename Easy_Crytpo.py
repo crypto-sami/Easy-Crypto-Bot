@@ -10,27 +10,32 @@ import asyncio
 from discord.user import User
 
 bitc = 0
+ether = 0
 add10btc = 10
 adminperm = 344370497666023435
 workstation = 1
+minerate = 25
 
 
 basiccommands = (f"\n**?help** - Display this list \n**?create** - Create a new user under your discord ID \n**?del** - Delete your account and data\n**?btc** - Receive the latest Bitcoin price\n**?eth** - Receive the latest Ethereum price\n")
-excommands1 = (f"**?mine** - Use all your resources to mine crypto (the default mining currency is BTC)\n**?inventory** - View your inventory, including workstations and crypto amounts\n**?upgrades** - View detailed upgrade levels for your workstation(s) and their benefits\n**?workstation** - View your current workstation specifications")
+excommands1 = (f"**?mb** - Use your wokrstation to mine Bitcoin\n**?mine eth** - Use your workstation to mine Ethereum\n**?inventory** - View your inventory, including workstations and crypto amounts\n**?upgrades** - View detailed upgrade levels for your workstation(s) and their benefits\n**?workstation** - View your current workstation specifications")
 
 work1mine = 25
+work1_success = 2
 cpul1 = (f"The basic CPU \nIntel Core I5-7600K")
 ram1 = (f"The basic RAM \n8Gb running at 2400Mhz")
 gpu1 = (f"The basic GPU \nGTX 1070 with 8Gb VRAM")
 psu1 = (f"The basic Power Supply \nSeasonic 550 Watt PSU")
 
 work2mine = 20
+work2_success = 2
 cpul2 = (f"The more advanced CPU \nIntel Core I7-7700K")
 ram2 = (f"The more advanced RAM \n16Gb running at 2400Mhz")
 gpu2 = (f"The more advanced GPU \nGTX 1080 with 8Gb VRAM")
 psu2 = (f"The more advanced Power Supply \nThermaltake 650 Watt PSU")
 
 work3mine = 15
+work3_success = 2
 cpul3 = (f"The even more advanced CPU \nIntel Core I7-11700K")
 ram3 = (f"The even more advanced RAM \n16Gb running at 3200Mhz")
 gpu3 = (f"The even more advanced GPU \nRTX 2070 with 8Gb VRAM")
@@ -126,13 +131,35 @@ async def on_message(message):
 
 
 
+    if message.content == ("?mb"):
+        user = str(message.author.id)
+        if user in data:
+            user_minerate = data[user]["minerate"]
+            minesuccess = random.randint(1,user_minerate)
+            if minesuccess == 2:
+                data[user]["bitc"]+=0.001
+                save()
+                userbtcamount = data[user]["bitc"]
+                embedVar=discord.Embed(title="0.001 BTC added to account!", url="", color=0x00ff00)
+                embedVar.add_field(name=f"Your balance is now {userbtcamount}", value=f"The latest BTC price is {getbtcprice()}")
+                embedVar.set_image(url="https://wompampsupport.azureedge.net/fetchimage?siteId=7575&v=2&jpgQuality=100&width=700&url=https%3A%2F%2Fi.kym-cdn.com%2Fentries%2Ficons%2Foriginal%2F000%2F029%2F959%2FScreen_Shot_2019-06-05_at_1.26.32_PM.jpg")
+                embedVar.set_footer(text="Bitcoin added to user: {}".format(message.author.display_name))
+                bitcoinamount = data[user]["bitc"]
+                sellnowprice = bitcoinamount*getbtcprice()
+                embedVar.add_field(name="Bitcoin sell now", value=f"Sell all Bitcoin now for {sellnowprice}")
+                await message.reply(embed=embedVar)
+            else:
+                await message.reply("Did not mine any Bitcoin. Try again!")
+        else:
+            await message.reply("No account, please use ?create")
+
     
     if message.content == '?create':
         user = message.author.id
         if user in data:
             await message.reply(f"Account already created user: {user}")
         else:
-            data[str(user)] = {"user": user, "bitc": bitc, "workstation": workstation}
+            data[str(user)] = {"user": user, "bitc": bitc, "ether": ether, "workstation": workstation, "minerate": minerate}
             save()
             await message.reply(f"New Member created under ID: {user}")
 
