@@ -43,7 +43,7 @@ psu3 = (f"The even more advanced Power Supply \nCooler Master 750 Watt PSU")
 
 
 bot = Bot(command_prefix='?')
-TOKEN = json.loads(open("token.json", "r").read())  
+TOKEN = json.loads(open("token.json", "r").read())
 
 def getbtcprice():
     string = cryptocompare.get_price('BTC', currency='GBP')
@@ -147,6 +147,29 @@ async def on_message(message):
                 bitcoinamount = data[user]["bitc"]
                 sellnowprice = bitcoinamount*getbtcprice()
                 embedVar.add_field(name="Bitcoin sell now", value=f"Sell all Bitcoin now for {sellnowprice}")
+                await message.reply(embed=embedVar)
+            else:
+                await message.reply("Did not mine any Bitcoin. Try again!")
+        else:
+            await message.reply("No account, please use ?create")
+
+
+    if message.content == ("?me"):
+        user = str(message.author.id)
+        if user in data:
+            user_minerate = data[user]["minerate"]
+            minesuccess = random.randint(1,user_minerate)
+            if minesuccess == 2:
+                data[user]["ether"]+=0.001
+                save()
+                userethamount = data[user]["ether"]
+                embedVar=discord.Embed(title="0.001 Ethereum added to account!", url="", color=0x00ff00)
+                embedVar.add_field(name=f"Your balance is now {userethamount}", value=f"The latest ETH price is {getethprice()}")
+                embedVar.set_image(url="https://wompampsupport.azureedge.net/fetchimage?siteId=7575&v=2&jpgQuality=100&width=700&url=https%3A%2F%2Fi.kym-cdn.com%2Fentries%2Ficons%2Foriginal%2F000%2F029%2F959%2FScreen_Shot_2019-06-05_at_1.26.32_PM.jpg")
+                embedVar.set_footer(text="Ethereum added to user: {}".format(message.author.display_name))
+                etheramount = data[user]["ether"]
+                sellnowprice = etheramount*getethprice()
+                embedVar.add_field(name="Ethereum sell now", value=f"Sell all Ethereum now for {sellnowprice}")
                 await message.reply(embed=embedVar)
             else:
                 await message.reply("Did not mine any Bitcoin. Try again!")
