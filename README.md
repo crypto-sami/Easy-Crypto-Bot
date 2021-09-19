@@ -1,0 +1,2 @@
+# Easy Crypto Bot
+ 
