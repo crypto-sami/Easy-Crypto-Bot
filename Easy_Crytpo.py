@@ -52,7 +52,7 @@ async def on_message(message):
     #if message.content == ("?upgrades"):
     #    await
 
-    if message.content == ("?help2"):
+    if message.content == ("?2help"):
         #await message.reply(f"```{basiccommands}\n{excommands1}```")
         #async def embedvar():  
         embedVar = discord.Embed(title="Welcome to the Help menu", description="View Bot commands below", color=0x00ff00)
