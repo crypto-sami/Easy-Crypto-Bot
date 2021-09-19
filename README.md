@@ -1,3 +1,5 @@
 # Easy Crypto Bot
 
-# ![Easy Crypto](https://assets.entrepreneur.com/content/3x2/2000/20191217200727-6Crypto.jpeg)
+# A Discord bot made to simulate real world cypto currency mining. Included in the bot is the ability to upgrade your workstation to increase chances of mining Bitcoin or Ethereum.
+# (Subject to change) V1 Will release with 5 workstation levels and the cypto currencies Bitcoin and Ethereum made readily available.
+# (Subject to change) V2 Will release with the feature of receiving a notification if the BTC or ETH price drops below a certain level.
