@@ -41,6 +41,20 @@ ram3 = (f"The even more advanced RAM \n16Gb running at 3200Mhz")
 gpu3 = (f"The even more advanced GPU \nRTX 2070 with 8Gb VRAM")
 psu3 = (f"The even more advanced Power Supply \nCooler Master 750 Watt PSU")
 
+work4mine = 10
+work4_success = 2
+cpul4 = (f"The high level CPU \nIntel Core I9-10900K")
+ram4 = (f"The high level RAM \n32Gb running at 3000Mhz")
+gpu4 = (f"The high level GPU \nRTX 3080 with 10Gb VRAM")
+psu4 = (f"The high level Power Supply \nEVGA 950 Watt PSU")
+
+work5mine = 5
+work5_success = 2
+cpul5 = (f"The very high level CPU \nIntel Core I9-11900K")
+ram5 = (f"The very high level RAM \n64Gb running at 3600Mhz")
+gpu5 = (f"The very high level GPU \nRTX 3090 with 24Gb VRAM")
+psu5 = (f"The very high level Power Supply \nEVGA 1100 Watt PSU")
+
 
 bot = Bot(command_prefix='?')
 TOKEN = json.loads(open("token.json", "r").read())
@@ -104,6 +118,24 @@ async def on_message(message):
                 embedVar.add_field(name="RAM", value=f"{ram3}")
                 embedVar.add_field(name="GPU", value=f"{gpu3}")
                 embedVar.add_field(name="Power Supply", value=f"{psu3}")
+                embedVar.set_thumbnail(url="https://assets.entrepreneur.com/content/3x2/2000/20191217200727-6Crypto.jpeg")
+                embedVar.set_author(name=message.author.display_name, url="", icon_url=message.author.avatar_url)
+                await message.reply(embed=embedVar)
+            elif data[user]["workstation"] == 4:
+                embedVar=discord.Embed(title="Your current operational workstation", url="", color=0x00ff00)
+                embedVar.add_field(name="CPU", value=f"{cpul4}")
+                embedVar.add_field(name="RAM", value=f"{ram4}")
+                embedVar.add_field(name="GPU", value=f"{gpu4}")
+                embedVar.add_field(name="Power Supply", value=f"{psu4}")
+                embedVar.set_thumbnail(url="https://assets.entrepreneur.com/content/3x2/2000/20191217200727-6Crypto.jpeg")
+                embedVar.set_author(name=message.author.display_name, url="", icon_url=message.author.avatar_url)
+                await message.reply(embed=embedVar)
+            elif data[user]["workstation"] == 5:
+                embedVar=discord.Embed(title="Your current operational workstation", url="", color=0x00ff00)
+                embedVar.add_field(name="CPU", value=f"{cpul5}")
+                embedVar.add_field(name="RAM", value=f"{ram5}")
+                embedVar.add_field(name="GPU", value=f"{gpu5}")
+                embedVar.add_field(name="Power Supply", value=f"{psu5}")
                 embedVar.set_thumbnail(url="https://assets.entrepreneur.com/content/3x2/2000/20191217200727-6Crypto.jpeg")
                 embedVar.set_author(name=message.author.display_name, url="", icon_url=message.author.avatar_url)
                 await message.reply(embed=embedVar)
