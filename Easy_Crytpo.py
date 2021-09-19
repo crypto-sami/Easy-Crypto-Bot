@@ -27,6 +27,11 @@ def getbtcprice():
     btcprice = string['BTC']['GBP']
     return(btcprice)
 
+def getethprice():
+    string = cryptocompare.get_price("ETH", currency="GBP")
+    ethprice = string['ETH']["GBP"]
+    return(ethprice)
+
 
 
 @bot.event
@@ -109,7 +114,13 @@ async def on_message(message):
 
     if message.content.startswith('?btc'):
         current_time = datetime.now()
-        embedVar = discord.Embed(title="BTC Price (GBP)", description=f"The latest Bitcoin price is **{getbtcprice()}**", color=0x00ff00)
+        embedVar = discord.Embed(title="Bitcoin Price (GBP)", description=f"The latest BTC price is **{getbtcprice()}**", color=0x00ff00)
+        embedVar.add_field(name="Time", value=f"Correct as of: {current_time}", inline=False)
+        await message.reply(embed=embedVar)
+
+    if message.content == ("?eth"):
+        current_time = datetime.now()
+        embedVar = discord.Embed(title="Ethereum Price (GBP)", description=f"The latest ETH price is **{getethprice()}**", colour =0x00ff00 )
         embedVar.add_field(name="Time", value=f"Correct as of: {current_time}", inline=False)
         await message.reply(embed=embedVar)
 
