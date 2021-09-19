@@ -28,6 +28,11 @@ ram2 = (f"The more advanced RAM \n16Gb running at 2400Mhz")
 gpu2 = (f"The more advanced GPU \nGTX 1080 with 8Gb VRAM")
 psu2 = (f"The more advanced Power Supply \nThermaltake 650 Watt PSU")
 
+cpul3 = (f"The even more advanced CPU \nIntel Core I7-11700K")
+ram3 = (f"The even more advanced RAM \n16Gb running at 3200Mhz")
+gpu3 = (f"The even more advanced GPU \nRTX 2070 with 8Gb VRAM")
+psu3 = (f"The even more advanced Power Supply \nCooler Master 750 Watt PSU")
+
 
 bot = Bot(command_prefix='?')
 TOKEN = json.loads(open("token.json", "r").read())  
@@ -75,7 +80,6 @@ async def on_message(message):
                 embedVar.add_field(name="Power Supply", value=f"{psu1}")
                 embedVar.set_thumbnail(url="https://assets.entrepreneur.com/content/3x2/2000/20191217200727-6Crypto.jpeg")
                 embedVar.set_author(name=message.author.display_name, url="", icon_url=message.author.avatar_url)
-                embedVar.set_footer(text="Help menu requested by: {}".format(message.author.display_name))
                 await message.reply(embed=embedVar)
             elif data[user]["workstation"] == 2:
                 embedVar=discord.Embed(title="Your current operational workstation", url="", color=0x00ff00)
@@ -85,10 +89,16 @@ async def on_message(message):
                 embedVar.add_field(name="Power Supply", value=f"{psu2}")
                 embedVar.set_thumbnail(url="https://assets.entrepreneur.com/content/3x2/2000/20191217200727-6Crypto.jpeg")
                 embedVar.set_author(name=message.author.display_name, url="", icon_url=message.author.avatar_url)
-                embedVar.set_footer(text="Help menu requested by: {}".format(message.author.display_name))
                 await message.reply(embed=embedVar)
             elif data[user]["workstation"] == 3:
-                await message.reply("3")
+                embedVar=discord.Embed(title="Your current operational workstation", url="", color=0x00ff00)
+                embedVar.add_field(name="CPU", value=f"{cpul3}")
+                embedVar.add_field(name="RAM", value=f"{ram3}")
+                embedVar.add_field(name="GPU", value=f"{gpu3}")
+                embedVar.add_field(name="Power Supply", value=f"{psu3}")
+                embedVar.set_thumbnail(url="https://assets.entrepreneur.com/content/3x2/2000/20191217200727-6Crypto.jpeg")
+                embedVar.set_author(name=message.author.display_name, url="", icon_url=message.author.avatar_url)
+                await message.reply(embed=embedVar)
         else:
             await message.reply("No account registered, please use ?create to register")
 
