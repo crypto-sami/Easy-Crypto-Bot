@@ -71,6 +71,7 @@ async def on_message(message):
         await message.channel.send(embed=embedVar)
 
 
+
     
     if message.content == '?create':
         user = message.author.id
@@ -80,6 +81,8 @@ async def on_message(message):
             data[str(user)] = {"user": user, "bitc": bitc}
             save()
             await message.reply(f"New Member created under ID: {user}")
+
+
 
 
     if command[0] == '?addbtc':
