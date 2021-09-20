@@ -169,14 +169,26 @@ async def on_message(message):
     if message.content == ("?mb"):
         user = str(message.author.id)
         await message.reply("Mining started, please wait 1 Minute")
-        asyncio.sleep(60)
+        await asyncio.sleep(60)
         if user in data:
             #user_minerate = data[user]["minerate"]
             minesuccess = random.randint(1,3)
-            data[user]["bitc"]+=0.001
+            if minesuccess == 1:
+                data[user]["bitc"]+=0.001
+                amountadded = 0.001
+                save()
+            elif minesuccess == 2:
+                data[user]["bitc"]+=0.0001
+                amountadded = 0.0001
+                save()
+            elif minesuccess == 3:
+                data[user]["bitc"]+=0.00001
+                amountadded = 0.00001
+                save()
+            else: await message.reply("Error Counting BTC")
             save()
             userbtcamount = data[user]["bitc"]
-            embedVar=discord.Embed(title="0.001 BTC added to account!", url="", color=0x00ff00)
+            embedVar=discord.Embed(title=f"{amountadded} BTC added to account!", url="", color=0x00ff00)
             embedVar.add_field(name=f"Your balance is now {userbtcamount}", value=f"The latest BTC price is {getbtcprice()}")
             embedVar.set_image(url="https://wompampsupport.azureedge.net/fetchimage?siteId=7575&v=2&jpgQuality=100&width=700&url=https%3A%2F%2Fi.kym-cdn.com%2Fentries%2Ficons%2Foriginal%2F000%2F029%2F959%2FScreen_Shot_2019-06-05_at_1.26.32_PM.jpg")
             embedVar.set_footer(text="Bitcoin added to user: {}".format(message.author.display_name))
@@ -191,22 +203,30 @@ async def on_message(message):
     if message.content == ("?me"):
         user = str(message.author.id)
         if user in data:
-            user_minerate = data[user]["minerate"]
-            minesuccess = random.randint(1,user_minerate)
-            if minesuccess == 2:
+            #user_minerate = data[user]["minerate"]
+            minesuccess = random.randint(1,3)
+            if minesuccess == 1:
                 data[user]["ether"]+=0.001
+                amountadded = 0.001
                 save()
-                userethamount = data[user]["ether"]
-                embedVar=discord.Embed(title="0.001 Ethereum added to account!", url="", color=0x00ff00)
-                embedVar.add_field(name=f"Your balance is now {userethamount}", value=f"The latest ETH price is {getethprice()}")
-                embedVar.set_image(url="https://wompampsupport.azureedge.net/fetchimage?siteId=7575&v=2&jpgQuality=100&width=700&url=https%3A%2F%2Fi.kym-cdn.com%2Fentries%2Ficons%2Foriginal%2F000%2F029%2F959%2FScreen_Shot_2019-06-05_at_1.26.32_PM.jpg")
-                embedVar.set_footer(text="Ethereum added to user: {}".format(message.author.display_name))
-                etheramount = data[user]["ether"]
-                sellnowprice = etheramount*getethprice()
-                embedVar.add_field(name="Ethereum sell now", value=f"Sell all Ethereum now for {sellnowprice}")
-                await message.reply(embed=embedVar)
-            else:
-                await message.reply("Did not mine any Bitcoin. Try again!")
+            elif minesuccess == 2:
+                data[user]["ether"]+=0.0001
+                amountadded = 0.0001
+                save()
+            elif minesuccess == 3:
+                data[user]["ether"]+=0.00001
+                amountadded = 0.00001
+                save()
+            else: await message.reply("Error Counting ETH")
+            userethamount = data[user]["ether"]
+            embedVar=discord.Embed(title=f"{amountadded} Ethereum added to account!", url="", color=0x00ff00)
+            embedVar.add_field(name=f"Your balance is now {userethamount}", value=f"The latest ETH price is {getethprice()}")
+            embedVar.set_image(url="https://wompampsupport.azureedge.net/fetchimage?siteId=7575&v=2&jpgQuality=100&width=700&url=https%3A%2F%2Fi.kym-cdn.com%2Fentries%2Ficons%2Foriginal%2F000%2F029%2F959%2FScreen_Shot_2019-06-05_at_1.26.32_PM.jpg")
+            embedVar.set_footer(text="Ethereum added to user: {}".format(message.author.display_name))
+            etheramount = data[user]["ether"]
+            sellnowprice = etheramount*getethprice()
+            embedVar.add_field(name="Ethereum sell now", value=f"Sell all Ethereum now for {sellnowprice}")
+            await message.reply(embed=embedVar)
         else:
             await message.reply("No account, please use ?create")
 
