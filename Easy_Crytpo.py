@@ -17,6 +17,9 @@ workstation = 1
 minerate = 25
 money = 0
 
+mine1 = 0.001
+mine2 = 0.0001
+mine3 = 0.00001
 
 basiccommands = (f"\n**?help** - Display this list \n**?create** - Create a new user under your discord ID \n**?del** - Delete your account and data\n**?btc** - Receive the latest Bitcoin price\n**?eth** - Receive the latest Ethereum price\n")
 excommands1 = (f"**?mb** - Use your wokrstation to mine Bitcoin\n**?me** - Use your workstation to mine Ethereum\n**?upgrades** - View detailed upgrade levels for your workstation(s) and their benefits\n**?workstation** - View your current workstation specifications")
@@ -165,23 +168,22 @@ async def on_message(message):
 
     if message.content == ("?mb"):
         user = str(message.author.id)
+        await message.reply("Mining started, please wait 1 Minute")
+        asyncio.sleep(60)
         if user in data:
-            user_minerate = data[user]["minerate"]
-            minesuccess = random.randint(1,user_minerate)
-            if minesuccess == 2:
-                data[user]["bitc"]+=0.001
-                save()
-                userbtcamount = data[user]["bitc"]
-                embedVar=discord.Embed(title="0.001 BTC added to account!", url="", color=0x00ff00)
-                embedVar.add_field(name=f"Your balance is now {userbtcamount}", value=f"The latest BTC price is {getbtcprice()}")
-                embedVar.set_image(url="https://wompampsupport.azureedge.net/fetchimage?siteId=7575&v=2&jpgQuality=100&width=700&url=https%3A%2F%2Fi.kym-cdn.com%2Fentries%2Ficons%2Foriginal%2F000%2F029%2F959%2FScreen_Shot_2019-06-05_at_1.26.32_PM.jpg")
-                embedVar.set_footer(text="Bitcoin added to user: {}".format(message.author.display_name))
-                bitcoinamount = data[user]["bitc"]
-                sellnowprice = bitcoinamount*getbtcprice()
-                embedVar.add_field(name="Bitcoin sell now", value=f"Sell all Bitcoin now for {sellnowprice}")
-                await message.reply(embed=embedVar)
-            else:
-                await message.reply("Did not mine any Bitcoin. Try again!")
+            #user_minerate = data[user]["minerate"]
+            minesuccess = random.randint(1,3)
+            data[user]["bitc"]+=0.001
+            save()
+            userbtcamount = data[user]["bitc"]
+            embedVar=discord.Embed(title="0.001 BTC added to account!", url="", color=0x00ff00)
+            embedVar.add_field(name=f"Your balance is now {userbtcamount}", value=f"The latest BTC price is {getbtcprice()}")
+            embedVar.set_image(url="https://wompampsupport.azureedge.net/fetchimage?siteId=7575&v=2&jpgQuality=100&width=700&url=https%3A%2F%2Fi.kym-cdn.com%2Fentries%2Ficons%2Foriginal%2F000%2F029%2F959%2FScreen_Shot_2019-06-05_at_1.26.32_PM.jpg")
+            embedVar.set_footer(text="Bitcoin added to user: {}".format(message.author.display_name))
+            bitcoinamount = data[user]["bitc"]
+            sellnowprice = bitcoinamount*getbtcprice()
+            embedVar.add_field(name="Bitcoin sell now", value=f"Sell all Bitcoin now for {sellnowprice}")
+            await message.reply(embed=embedVar)
         else:
             await message.reply("No account, please use ?create")
 
