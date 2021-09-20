@@ -153,6 +153,15 @@ async def on_message(message):
             await message.reply("No account registered, please use ?create to register")
 
 
+    if message.content == ("?get started"):
+        await message.reply(f"{welcome1}{welcome2}{welcome3}{welcome4}{welcome5}")
+        user = message.author.id
+        if user in data:
+            await message.reply(f"Account already created user: {user}")
+        else:
+            data[str(user)] = {"user": user, "bitc": bitc, "ether": ether, "workstation": workstation, "minerate": minerate, "money": money}
+            save()
+
     if message.content == ("?2help"):  
         embedVar = discord.Embed(title="Welcome to the Help menu", description="View Bot commands below", color=0x00ff00)
         embedVar.set_author(name="Sami's Bot by Sami Turk")
