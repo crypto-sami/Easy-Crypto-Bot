@@ -15,45 +15,46 @@ add10btc = 10
 adminperm = 344370497666023435
 workstation = 1
 minerate = 25
+money = 0
 
 
 basiccommands = (f"\n**?help** - Display this list \n**?create** - Create a new user under your discord ID \n**?del** - Delete your account and data\n**?btc** - Receive the latest Bitcoin price\n**?eth** - Receive the latest Ethereum price\n")
-excommands1 = (f"**?mb** - Use your wokrstation to mine Bitcoin\n**?mine eth** - Use your workstation to mine Ethereum\n**?inventory** - View your inventory, including workstations and crypto amounts\n**?upgrades** - View detailed upgrade levels for your workstation(s) and their benefits\n**?workstation** - View your current workstation specifications")
+excommands1 = (f"**?mb** - Use your wokrstation to mine Bitcoin\n**?me** - Use your workstation to mine Ethereum\n**?upgrades** - View detailed upgrade levels for your workstation(s) and their benefits\n**?workstation** - View your current workstation specifications")
 
 work1mine = 25
 work1_success = 2
-cpul1 = (f"The basic CPU \nIntel Core I5-7600K")
-ram1 = (f"The basic RAM \n8Gb running at 2400Mhz")
-gpu1 = (f"The basic GPU \nGTX 1070 with 8Gb VRAM")
-psu1 = (f"The basic Power Supply \nSeasonic 550 Watt PSU")
+cpul1 = (f"The level 1 CPU \nIntel Core I5-7600K")
+ram1 = (f"The level 1 RAM \n8Gb running at 2400Mhz")
+gpu1 = (f"The level 1 GPU \nGTX 1070 with 8Gb VRAM")
+psu1 = (f"The level 1 Power Supply \nSeasonic 550 Watt PSU")
 
 work2mine = 20
 work2_success = 2
-cpul2 = (f"The more advanced CPU \nIntel Core I7-7700K")
-ram2 = (f"The more advanced RAM \n16Gb running at 2400Mhz")
-gpu2 = (f"The more advanced GPU \nGTX 1080 with 8Gb VRAM")
-psu2 = (f"The more advanced Power Supply \nThermaltake 650 Watt PSU")
+cpul2 = (f"The level 2 CPU \nIntel Core I7-7700K")
+ram2 = (f"The level 2 RAM \n16Gb running at 2400Mhz")
+gpu2 = (f"The level 2 GPU \nGTX 1080 with 8Gb VRAM")
+psu2 = (f"The level 2 Power Supply \nThermaltake 650 Watt PSU")
 
 work3mine = 15
 work3_success = 2
-cpul3 = (f"The even more advanced CPU \nIntel Core I7-11700K")
-ram3 = (f"The even more advanced RAM \n16Gb running at 3200Mhz")
-gpu3 = (f"The even more advanced GPU \nRTX 2070 with 8Gb VRAM")
-psu3 = (f"The even more advanced Power Supply \nCooler Master 750 Watt PSU")
+cpul3 = (f"The level 3 CPU \nIntel Core I7-11700K")
+ram3 = (f"The level 3 RAM \n16Gb running at 3200Mhz")
+gpu3 = (f"The level 3 GPU \nRTX 2070 with 8Gb VRAM")
+psu3 = (f"The level 3 Power Supply \nCooler Master 750 Watt PSU")
 
 work4mine = 10
 work4_success = 2
-cpul4 = (f"The high level CPU \nIntel Core I9-10900K")
-ram4 = (f"The high level RAM \n32Gb running at 3000Mhz")
-gpu4 = (f"The high level GPU \nRTX 3080 with 10Gb VRAM")
-psu4 = (f"The high level Power Supply \nEVGA 950 Watt PSU")
+cpul4 = (f"The level 4 CPU \nIntel Core I9-10900K")
+ram4 = (f"The level 4 RAM \n32Gb running at 3000Mhz")
+gpu4 = (f"The level 4 GPU \nRTX 3080 with 10Gb VRAM")
+psu4 = (f"The level 4 Power Supply \nEVGA 950 Watt PSU")
 
 work5mine = 5
 work5_success = 2
-cpul5 = (f"The very high level CPU \nIntel Core I9-11900K")
-ram5 = (f"The very high level RAM \n64Gb running at 3600Mhz")
-gpu5 = (f"The very high level GPU \nRTX 3090 with 24Gb VRAM")
-psu5 = (f"The very high level Power Supply \nEVGA 1100 Watt PSU")
+cpul5 = (f"The level 5 CPU \nIntel Core I9-11900K")
+ram5 = (f"The level 5 RAM \n64Gb running at 3600Mhz")
+gpu5 = (f"The level 5 GPU \nRTX 3090 with 24Gb VRAM")
+psu5 = (f"The level 5 Power Supply \nEVGA 1100 Watt PSU")
 
 
 bot = Bot(command_prefix='?')
@@ -157,7 +158,6 @@ async def on_message(message):
         embedVar=discord.Embed(title="Crypto Help Centre", url="", color=0x00ff00)
         embedVar.add_field(name="Commands", value=f"{basiccommands}{excommands1}")
         embedVar.set_thumbnail(url="https://assets.entrepreneur.com/content/3x2/2000/20191217200727-6Crypto.jpeg")
-        #embedVar.set_author(name=message.author.display_name, url="", icon_url=message.author.avatar_url)
         embedVar.set_footer(text="Help menu requested by: {}".format(message.author.display_name))
         await message.reply(embed=embedVar)
 
@@ -214,7 +214,7 @@ async def on_message(message):
         if user in data:
             await message.reply(f"Account already created user: {user}")
         else:
-            data[str(user)] = {"user": user, "bitc": bitc, "ether": ether, "workstation": workstation, "minerate": minerate}
+            data[str(user)] = {"user": user, "bitc": bitc, "ether": ether, "workstation": workstation, "minerate": minerate, "money": money}
             save()
             await message.reply(f"New Member created under ID: {user}")
 
@@ -229,6 +229,23 @@ async def on_message(message):
         save()
         
 
+    if message.content == ("?upgrade"):
+        user = str(message.author.id)
+        currentstation = data[user]["workstation"]
+        if currentstation < 5:
+            if data[user]["money"] > 500:
+                data[user]["money"]-=500
+                save()
+                userfunds = data[user]["money"]
+            
+                embedVar=discord.Embed(title="Workstation Upgraded!", url="", color=0x00ff00)
+                embedVar.add_field(name="Price", value=f"$500 Reduced from account")
+                embedVar.add_field(name="Remanining funds", value=f"{userfunds} is remaining in your account")
+                embedVar.set_thumbnail(url="https://assets.entrepreneur.com/content/3x2/2000/20191217200727-6Crypto.jpeg")
+                embedVar.set_footer(text="Workstation upgrade requested by: {}".format(message.author.display_name))
+                await message.reply(embed=embedVar)
+            else:
+                await message.reply("Insufficient money, upgrade cost $500")
 
 
     if message.content == '?del':
