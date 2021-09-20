@@ -22,7 +22,7 @@ mine2 = 0.0001
 mine3 = 0.00001
 
 basiccommands = (f"\n**?help** - Display this list \n**?create** - Create a new user under your discord ID \n**?del** - Delete your account and data\n**?btc** - Receive the latest Bitcoin price\n**?eth** - Receive the latest Ethereum price\n")
-excommands1 = (f"**?mb** - Use your wokrstation to mine Bitcoin\n**?me** - Use your workstation to mine Ethereum\n**?upgrades** - View detailed upgrade levels for your workstation(s) and their benefits\n**?workstation** - View your current workstation specifications")
+excommands1 = (f"**?mb** - Use your wokrstation to mine Bitcoin\n**?me** - Use your workstation to mine Ethereum\n**?workstation** - View your current workstation specifications\n**?upgrade** Upgrade your workstation to the next level - Each upgrade costs $500\n")
 
 work1mine = 25
 work1_success = 2
@@ -147,9 +147,7 @@ async def on_message(message):
             await message.reply("No account registered, please use ?create to register")
 
 
-    if message.content == ("?2help"):
-        #await message.reply(f"```{basiccommands}\n{excommands1}```")
-        #async def embedvar():  
+    if message.content == ("?2help"):  
         embedVar = discord.Embed(title="Welcome to the Help menu", description="View Bot commands below", color=0x00ff00)
         embedVar.set_author(name="Sami's Bot by Sami Turk")
         embedVar.set_thumbnail(url="https://assets.entrepreneur.com/content/3x2/2000/20191217200727-6Crypto.jpeg")
@@ -171,7 +169,6 @@ async def on_message(message):
         await message.reply("Mining started, please wait 1 Minute")
         await asyncio.sleep(60)
         if user in data:
-            #user_minerate = data[user]["minerate"]
             minesuccess = random.randint(1,3)
             if minesuccess == 1:
                 data[user]["bitc"]+=0.001
@@ -182,13 +179,13 @@ async def on_message(message):
                 amountadded = 0.0001
                 save()
             elif minesuccess == 3:
-                data[user]["bitc"]+=0.00001
-                amountadded = 0.00001
+                data[user]["bitc"]+=0.0001
+                amountadded = 0.0001
                 save()
             else: await message.reply("Error Counting BTC")
             save()
             userbtcamount = data[user]["bitc"]
-            embedVar=discord.Embed(title=f"{amountadded} BTC added to account!", url="", color=0x00ff00)
+            embedVar=discord.Embed(title=f"{amountadded} Bitcoin added to account!", url="", color=0x00ff00)
             embedVar.add_field(name=f"Your balance is now {userbtcamount}", value=f"The latest BTC price is {getbtcprice()}")
             embedVar.set_image(url="https://wompampsupport.azureedge.net/fetchimage?siteId=7575&v=2&jpgQuality=100&width=700&url=https%3A%2F%2Fi.kym-cdn.com%2Fentries%2Ficons%2Foriginal%2F000%2F029%2F959%2FScreen_Shot_2019-06-05_at_1.26.32_PM.jpg")
             embedVar.set_footer(text="Bitcoin added to user: {}".format(message.author.display_name))
@@ -202,8 +199,9 @@ async def on_message(message):
 
     if message.content == ("?me"):
         user = str(message.author.id)
+        await message.reply("Mining started, please wait 1 Minute")
+        await asyncio.sleep(60)
         if user in data:
-            #user_minerate = data[user]["minerate"]
             minesuccess = random.randint(1,3)
             if minesuccess == 1:
                 data[user]["ether"]+=0.001
@@ -214,8 +212,8 @@ async def on_message(message):
                 amountadded = 0.0001
                 save()
             elif minesuccess == 3:
-                data[user]["ether"]+=0.00001
-                amountadded = 0.00001
+                data[user]["ether"]+=0.0001
+                amountadded = 0.0001
                 save()
             else: await message.reply("Error Counting ETH")
             userethamount = data[user]["ether"]
@@ -281,9 +279,6 @@ async def on_message(message):
        
       
 
-    #if message.content == ("?btc"):
-        #await message.reply(f"The latest bitcoin price is {getbtcprice()} GBP")
-
     if message.content.startswith('?btc'):
         current_time = datetime.now()
         embedVar = discord.Embed(title="Bitcoin Price (GBP)", description=f"The latest BTC price is **{getbtcprice()}**", color=0x00ff00)
@@ -297,13 +292,6 @@ async def on_message(message):
         embedVar.add_field(name="Time", value=f"Correct as of: {current_time}", inline=False)
         embedVar.set_thumbnail(url="https://assets.entrepreneur.com/content/3x2/2000/20191217200727-6Crypto.jpeg")
         await message.reply(embed=embedVar)
-
-
-
-
-
-
-
 
 
 
