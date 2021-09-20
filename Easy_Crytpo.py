@@ -22,7 +22,7 @@ mine2 = 0.0001
 mine3 = 0.00001
 
 basiccommands = (f"\n**?help** - Display this list \n**?create** - Create a new user under your discord ID \n**?del** - Delete your account and data\n**?btc** - Receive the latest Bitcoin price\n**?eth** - Receive the latest Ethereum price\n")
-excommands1 = (f"**?mb** - Use your wokrstation to mine Bitcoin\n**?me** - Use your workstation to mine Ethereum\n**?workstation** - View your current workstation specifications\n**?upgrade** Upgrade your workstation to the next level - Each upgrade costs $500\n")
+excommands1 = (f"**?mb** - Use your wokrstation to mine Bitcoin\n**?me** - Use your workstation to mine Ethereum\n**?sell btc** - Sell all your bitcoin\n**?sell eth** - Sell all your ethereum\n**?workstation** - View your current workstation specifications\n**?upgrade** - Upgrade your workstation to the next level - Each upgrade costs $500\n**?inventory** - View your levels of Bitcoin and Ethereum and also your account money\n")
 
 work1mine = 25
 work1_success = 2
@@ -59,6 +59,12 @@ ram5 = (f"The level 5 RAM \n64Gb running at 3600Mhz")
 gpu5 = (f"The level 5 GPU \nRTX 3090 with 24Gb VRAM")
 psu5 = (f"The level 5 Power Supply \nEVGA 1100 Watt PSU")
 
+
+welcome1 = (f"Welcome to 'Easy Crypto', a bot designed and developed by Sami Turk. With this bot you can use your workstation to mine Bitcoin and/or Ethereum.\n")
+welcome2 = (f"When you mine a portion of a certain coin, you'll be shwon the 'sell now' price, its up to you wether to sell now, or battle the fluctuating Crytpo market. Good Luck!\n")
+welcome3 = (f"\nDuring your time using Easy Crypto, you may encouter an unknown bug, if this is the case, please let Sami#3255 know about this as soon as possible.\n")
+welcome4 = (f"Normally, to get started with this bot, you would need to do ?create to create an account, but i've already done that for you.\n")
+welcome5 = (f"Your account is created so start mining by either ?mb for bitcoin or ?me for ethereum. For more information, ?help is your friend")
 
 bot = Bot(command_prefix='?')
 TOKEN = json.loads(open("token.json", "r").read())
@@ -162,7 +168,12 @@ async def on_message(message):
         embedVar.set_footer(text="Help menu requested by: {}".format(message.author.display_name))
         await message.reply(embed=embedVar)
 
-
+    if message.content == ("?inventory"):
+        user = str(message.author.id)
+        usercash = data[user]["money"]
+        userbtc = data[user]["bitc"]
+        usereth = data[user]["ether"]
+        await message.reply(f"Cash Balance: {usercash} \nBitcoin Amount: {userbtc} \nEthereum amount: {usereth}")
 
     if message.content == ("?mb"):
         user = str(message.author.id)
@@ -238,15 +249,29 @@ async def on_message(message):
             save()
             await message.reply(f"New Member created under ID: {user}")
 
+    if message.content == ("?sell btc"):
+        user = str(message.author.id)
+        ammtoadd = data[user]["bitc"]*getbtcprice()
+        data[user]["money"]+=ammtoadd
+        data[user]["bitc"]=0
+        usercash = data[user]["money"]
+        await message.reply(f"All bitcoin sold, your account funds are now: {usercash}")
+
+    if message.content == ("?sell eth"):
+        user = str(message.author.id)
+        ammtoadd = data[user]["ether"]*getethprice()
+        data[user]["money"]+=ammtoadd
+        data[user]["ether"]=0
+        usercash = data[user]["money"]
+        await message.reply(f"All ethereum sold, your account funds are now: {usercash}")
 
 
-
-    if command[0] == '?addbtc':
-        del command[0]
-        user = message.author.id
-        data[str(user)]["bitc"]+=float(command[0])
-        await message.reply(f"{command[0]} Bitcoin added under ID {user}")
-        save()
+#    if command[0] == '?addbtc':
+#        del command[0]
+#        user = message.author.id
+#        data[str(user)]["bitc"]+=float(command[0])
+#        await message.reply(f"{command[0]} Bitcoin added under ID {user}")
+#        save()
         
 
     if message.content == ("?upgrade"):
