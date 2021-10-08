@@ -8,6 +8,7 @@ import cryptocompare
 from datetime import datetime
 import asyncio
 from discord.user import User
+from datetime import date
 
 bitc = 0
 ether = 0
@@ -16,6 +17,8 @@ adminperm = 344370497666023435
 workstation = 1
 minerate = 25
 money = 0
+price_last = 0
+date_last = 0
 
 mine1 = 0.001
 mine2 = 0.0001
@@ -253,7 +256,7 @@ async def on_message(message):
         if user in data:
             await message.reply(f"Account already created user: {user}")
         else:
-            data[str(user)] = {"user": user, "bitc": bitc, "ether": ether, "workstation": workstation, "minerate": minerate, "money": money}
+            data[str(user)] = {"user": user, "bitc": bitc, "ether": ether, "workstation": workstation, "minerate": minerate, "money": money, "price_last": price_last, "date_last": date_last}
             save()
             await message.reply(f"New Member created under ID: {user}")
 
@@ -314,14 +317,23 @@ async def on_message(message):
 
     if message.content.startswith('?btc'):
         current_time = datetime.now()
-        embedVar = discord.Embed(title="Bitcoin Price (GBP)", description=f"The latest BTC price is **{getbtcprice()}**", color=0x00ff00)
+        current_date = date.today()
+        current_btc_price = getbtcprice()
+        embedVar = discord.Embed(title="Bitcoin Price (GBP)", description=f"The latest BTC price is **{current_btc_price}**", color=0x00ff00)
         embedVar.add_field(name="Time", value=f"Correct as of: {current_time}", inline=False)
         embedVar.set_thumbnail(url="https://assets.entrepreneur.com/content/3x2/2000/20191217200727-6Crypto.jpeg")
+        embedVar.set_footer(text=f"Requested on {current_date}".format(message.author.display_name))
         await message.reply(embed=embedVar)
+        user = str(message.author.id)
+        data[user]["date_last"]=current_date
+        data[user]["price_last"]=current_btc_price
+        save()
+
 
     if message.content == ("?eth"):
         current_time = datetime.now()
-        embedVar = discord.Embed(title="Ethereum Price (GBP)", description=f"The latest ETH price is **{getethprice()}**", colour =0x00ff00 )
+        current_eth_price = getethprice()
+        embedVar = discord.Embed(title="Ethereum Price (GBP)", description=f"The latest ETH price is **{current_eth_price}**", colour =0x00ff00 )
         embedVar.add_field(name="Time", value=f"Correct as of: {current_time}", inline=False)
         embedVar.set_thumbnail(url="https://assets.entrepreneur.com/content/3x2/2000/20191217200727-6Crypto.jpeg")
         await message.reply(embed=embedVar)
