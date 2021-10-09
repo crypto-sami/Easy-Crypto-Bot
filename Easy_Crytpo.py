@@ -1,4 +1,5 @@
 import json
+import time
 import random
 import discord
 from discord import client
@@ -275,15 +276,7 @@ async def on_message(message):
         data[user]["ether"]=0
         usercash = data[user]["money"]
         await message.reply(f"All ethereum sold, your account funds are now: {usercash}")
-
-
-#    if command[0] == '?addbtc':
-#        del command[0]
-#        user = message.author.id
-#        data[str(user)]["bitc"]+=float(command[0])
-#        await message.reply(f"{command[0]} Bitcoin added under ID {user}")
-#        save()
-        
+     
 
     if message.content == ("?upgrade"):
         user = str(message.author.id)
@@ -312,35 +305,30 @@ async def on_message(message):
             await message.reply(f"Account Deleted {user}")
         else:
             await message.reply("No account registered to delete")
-       
-      
+         
 
     if message.content.startswith('?btc'):
-        current_time = datetime.now()
-        current_date = date.today()
-        current_btc_price = getbtcprice()
-        embedVar = discord.Embed(title="Bitcoin Price (GBP)", description=f"The latest BTC price is **{current_btc_price}**", color=0x00ff00)
-        embedVar.add_field(name="Time", value=f"Correct as of: {current_time}", inline=False)
-        embedVar.set_thumbnail(url="https://assets.entrepreneur.com/content/3x2/2000/20191217200727-6Crypto.jpeg")
-        embedVar.set_footer(text=f"Requested on {current_date}".format(message.author.display_name))
-        await message.reply(embed=embedVar)
         user = str(message.author.id)
-        data[user]["date_last"]=current_date
-        data[user]["price_last"]=current_btc_price
-        save()
-
+        current_time = datetime.now()
+        current_date = str(date.today())
+        current_btc_price = getbtcprice()
+        last_price = data[user]["price_last"]
+        last_date = data[user]["date_last"]
+        embedVar = discord.Embed(title=f"Bitcoin Price is {current_btc_price}", description=f"Your last price was on ***{last_date}*** and the price was ***{last_price}***", color=0x00ff00)
+        embedVar.set_thumbnail(url="https://assets.entrepreneur.com/content/3x2/2000/20191217200727-6Crypto.jpeg")
+        await message.reply(embed=embedVar)
+        if user in data:
+            data[user]["date_last"]=current_date
+            data[user]["price_last"]=current_btc_price
+            save()
 
     if message.content == ("?eth"):
-        current_time = datetime.now()
+        current_time1 = datetime.now()
+        current_time = current_time1.strftime("%H:%M:%S")
         current_eth_price = getethprice()
-        embedVar = discord.Embed(title="Ethereum Price (GBP)", description=f"The latest ETH price is **{current_eth_price}**", colour =0x00ff00 )
-        embedVar.add_field(name="Time", value=f"Correct as of: {current_time}", inline=False)
+        embedVar = discord.Embed(title=f"Ethereum Price is {current_eth_price}", description=f"Correct as of: {current_time}", colour =0x00ff00 )
         embedVar.set_thumbnail(url="https://assets.entrepreneur.com/content/3x2/2000/20191217200727-6Crypto.jpeg")
+        embedVar.set_footer(text="Price Compare has not been implemeted for Ethereum yet")
         await message.reply(embed=embedVar)
-
-
-
-
-
 
 bot.run(TOKEN)
