@@ -73,6 +73,10 @@ welcome5 = (f"Your account is created so start mining by either ?mb for bitcoin 
 bot = Bot(command_prefix='?')
 TOKEN = json.loads(open("token.json", "r").read())
 
+def getstockprice(code):
+    price = cryptocompare.get_price("code", currency="GBP")
+    return price
+
 def getbtcprice():
     string = cryptocompare.get_price('BTC', currency='GBP')
     btcprice = string['BTC']['GBP']
