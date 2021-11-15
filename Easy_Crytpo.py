@@ -223,6 +223,10 @@ async def on_message(message):
         else:
             await message.reply("No account, please use ?create")
 
+    if message.content.startswith("?price"):
+        messsage_len = len(message)
+        if messsage_len == 10:
+            await message.reply("10")
 
     if message.content == ("?me"):
         user = str(message.author.id)
