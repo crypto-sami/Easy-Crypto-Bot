@@ -20,7 +20,7 @@ minerate = 25
 money = 0
 price_last = 0
 date_last = 0
-
+github_link = "http://easycrypto.us.to"
 mine1 = 0.001
 mine2 = 0.0001
 mine3 = 0.00001
@@ -71,7 +71,7 @@ welcome4 = (f"Normally, to get started with this bot, you would need to do ?crea
 welcome5 = (f"Your account is created so start mining by either ?mb for bitcoin or ?me for ethereum. For more information, ?help is your friend")
 
 bot = Bot(command_prefix='?')
-TOKEN = json.loads(open("token.json", "r").read())
+TOKEN = json.loads(open("C:/Users/samit/Documents/VScode projects/Python/token.json", "r").read())
 
 def getstockprice(code):
     price = cryptocompare.get_price("code", currency="GBP")
@@ -171,7 +171,7 @@ async def on_message(message):
 
     if message.content == ("?2help"):  
         embedVar = discord.Embed(title="Welcome to the Help menu", description="View Bot commands below", color=0x00ff00)
-        embedVar.set_author(name="Sami's Bot by Sami Turk")
+        embedVar.set_author(name="Easy Crypto by Sami Turk")
         embedVar.set_thumbnail(url="https://assets.entrepreneur.com/content/3x2/2000/20191217200727-6Crypto.jpeg")
         embedVar.add_field(name="Basic Commands", value=f"{basiccommands}{excommands1}")
         embedVar.set_footer(text="Help menu requested by: {}".format(message.author.display_name))
@@ -181,7 +181,7 @@ async def on_message(message):
         embedVar=discord.Embed(title="Crypto Help Centre", url="", color=0x00ff00)
         embedVar.add_field(name="Commands", value=f"{basiccommands}{excommands1}")
         embedVar.set_thumbnail(url="https://assets.entrepreneur.com/content/3x2/2000/20191217200727-6Crypto.jpeg")
-        embedVar.set_footer(text="Help menu requested by: {}".format(message.author.display_name))
+        embedVar.set_footer(text=f"Track the development at {github_link}")
         await message.reply(embed=embedVar)
 
     if message.content == ("?inventory"):
