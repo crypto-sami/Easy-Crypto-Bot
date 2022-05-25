@@ -71,7 +71,7 @@ welcome4 = (f"Normally, to get started with this bot, you would need to do ?crea
 welcome5 = (f"Your account is created so start mining by either ?mb for bitcoin or ?me for ethereum. For more information, ?help is your friend")
 
 bot = Bot(command_prefix='?')
-TOKEN = json.loads(open("/token.json", "r").read())
+TOKEN = json.loads(open("token.json", "r").read())
 
 def getstockprice(code):
     price = cryptocompare.get_price("code", currency="GBP")
