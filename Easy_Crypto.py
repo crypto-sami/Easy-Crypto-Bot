@@ -10,6 +10,8 @@ from datetime import datetime
 import asyncio
 from discord.user import User
 from datetime import date
+from EC_functions import print_w
+
 
 bitc = 0
 ether = 0
@@ -20,7 +22,7 @@ minerate = 25
 money = 0
 price_last = 0
 date_last = 0
-github_link = "http://easycrypto.us.to"
+github_link = "https://github.com/crypto-sami/Easy-Crypto-Bot"
 mine1 = 0.001
 mine2 = 0.0001
 mine3 = 0.00001
@@ -113,46 +115,36 @@ async def on_message(message):
         if user in data:
             if data[user]["workstation"] == 1:
                 embedVar=discord.Embed(title="Your current operational workstation", url="", color=0x00ff00)
-                embedVar.add_field(name="CPU", value=f"{cpul1}")
-                embedVar.add_field(name="RAM", value=f"{ram1}")
-                embedVar.add_field(name="GPU", value=f"{gpu1}")
-                embedVar.add_field(name="Power Supply", value=f"{psu1}")
+                msg = print_w(data[user]["workstation"])
+                embedVar.add_field(name="Contents", value=f"{msg}")
                 embedVar.set_thumbnail(url="https://assets.entrepreneur.com/content/3x2/2000/20191217200727-6Crypto.jpeg")
                 embedVar.set_author(name=message.author.display_name, url="", icon_url=message.author.avatar_url)
                 await message.reply(embed=embedVar)
             elif data[user]["workstation"] == 2:
                 embedVar=discord.Embed(title="Your current operational workstation", url="", color=0x00ff00)
-                embedVar.add_field(name="CPU", value=f"{cpul2}")
-                embedVar.add_field(name="RAM", value=f"{ram2}")
-                embedVar.add_field(name="GPU", value=f"{gpu2}")
-                embedVar.add_field(name="Power Supply", value=f"{psu2}")
+                msg = print_w(data[user]["workstation"])
+                embedVar.add_field(name="Contents", value=f"{msg}")
                 embedVar.set_thumbnail(url="https://assets.entrepreneur.com/content/3x2/2000/20191217200727-6Crypto.jpeg")
                 embedVar.set_author(name=message.author.display_name, url="", icon_url=message.author.avatar_url)
                 await message.reply(embed=embedVar)
             elif data[user]["workstation"] == 3:
                 embedVar=discord.Embed(title="Your current operational workstation", url="", color=0x00ff00)
-                embedVar.add_field(name="CPU", value=f"{cpul3}")
-                embedVar.add_field(name="RAM", value=f"{ram3}")
-                embedVar.add_field(name="GPU", value=f"{gpu3}")
-                embedVar.add_field(name="Power Supply", value=f"{psu3}")
+                msg = print_w(data[user]["workstation"])
+                embedVar.add_field(name="Contents", value=f"{msg}")
                 embedVar.set_thumbnail(url="https://assets.entrepreneur.com/content/3x2/2000/20191217200727-6Crypto.jpeg")
                 embedVar.set_author(name=message.author.display_name, url="", icon_url=message.author.avatar_url)
                 await message.reply(embed=embedVar)
             elif data[user]["workstation"] == 4:
                 embedVar=discord.Embed(title="Your current operational workstation", url="", color=0x00ff00)
-                embedVar.add_field(name="CPU", value=f"{cpul4}")
-                embedVar.add_field(name="RAM", value=f"{ram4}")
-                embedVar.add_field(name="GPU", value=f"{gpu4}")
-                embedVar.add_field(name="Power Supply", value=f"{psu4}")
+                msg = print_w(data[user]["workstation"])
+                embedVar.add_field(name="Contents", value=f"{msg}")
                 embedVar.set_thumbnail(url="https://assets.entrepreneur.com/content/3x2/2000/20191217200727-6Crypto.jpeg")
                 embedVar.set_author(name=message.author.display_name, url="", icon_url=message.author.avatar_url)
                 await message.reply(embed=embedVar)
             elif data[user]["workstation"] == 5:
                 embedVar=discord.Embed(title="Your current operational workstation", url="", color=0x00ff00)
-                embedVar.add_field(name="CPU", value=f"{cpul5}")
-                embedVar.add_field(name="RAM", value=f"{ram5}")
-                embedVar.add_field(name="GPU", value=f"{gpu5}")
-                embedVar.add_field(name="Power Supply", value=f"{psu5}")
+                msg = print_w(data[user]["workstation"])
+                embedVar.add_field(name="Contents", value=f"{msg}")
                 embedVar.set_thumbnail(url="https://assets.entrepreneur.com/content/3x2/2000/20191217200727-6Crypto.jpeg")
                 embedVar.set_author(name=message.author.display_name, url="", icon_url=message.author.avatar_url)
                 await message.reply(embed=embedVar)
