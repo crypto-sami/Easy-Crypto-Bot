@@ -314,14 +314,12 @@ async def on_message(message):
          
 
     if message.content.startswith('?btc'):
-        user = str(message.author.id)
-        current_time = datetime.now()
-        current_date = str(date.today())
+        current_time1 = datetime.now()
+        current_time = current_time1.strftime("%H:%M:%S")
         current_btc_price = getbtcprice()
-        last_price = data[user]["price_last"]
-        last_date = data[user]["date_last"]
-        embedVar = discord.Embed(title=f"Bitcoin Price is {current_btc_price}", description=f"Your last price was on ***{last_date}*** and the price was ***{last_price}***", color=0x00ff00)
+        embedVar = discord.Embed(title=f"Bitcoin Price is {current_btc_price}", description=f"Correct as of: ***{current_time}***", color=0x00ff00)
         embedVar.set_thumbnail(url="https://assets.entrepreneur.com/content/3x2/2000/20191217200727-6Crypto.jpeg")
+        embedVar.set_footer(text="Price Compare has not been configured yet")
         await message.reply(embed=embedVar)
         if user in data:
             data[user]["date_last"]=current_date
@@ -334,7 +332,7 @@ async def on_message(message):
         current_eth_price = getethprice()
         embedVar = discord.Embed(title=f"Ethereum Price is {current_eth_price}", description=f"Correct as of: {current_time}", colour =0x00ff00 )
         embedVar.set_thumbnail(url="https://assets.entrepreneur.com/content/3x2/2000/20191217200727-6Crypto.jpeg")
-        embedVar.set_footer(text="Price Compare has not been implemeted for Ethereum yet")
+        embedVar.set_footer(text="Price Compare has not been configured yet")
         await message.reply(embed=embedVar)
 
 bot.run(TOKEN)
