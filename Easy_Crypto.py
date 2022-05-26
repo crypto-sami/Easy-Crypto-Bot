@@ -321,10 +321,10 @@ async def on_message(message):
         embedVar.set_thumbnail(url="https://assets.entrepreneur.com/content/3x2/2000/20191217200727-6Crypto.jpeg")
         embedVar.set_footer(text="Price Compare has not been configured yet")
         await message.reply(embed=embedVar)
-        if user in data:
-            data[user]["date_last"]=current_date
-            data[user]["price_last"]=current_btc_price
-            save()
+#        if user in data:
+#            data[user]["date_last"]=current_date
+#            data[user]["price_last"]=current_btc_price
+#            save()
 
     if message.content == ("?eth"):
         current_time1 = datetime.now()
