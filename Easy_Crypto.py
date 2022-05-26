@@ -158,7 +158,7 @@ async def on_message(message):
         if user in data:
             await message.reply(f"Account already created user: {user}")
         else:
-            data[str(user)] = {"user": user, "bitc": bitc, "ether": ether, "workstation": workstation, "minerate": minerate, "money": money}
+            data[str(user)] = {"user": user, "bitc": bitc, "ether": ether, "workstation": workstation, "minerate": minerate, "money": money, "price_last": last_price, "date_last": date_last}
             save()
 
     if message.content == ("?2help"):  
