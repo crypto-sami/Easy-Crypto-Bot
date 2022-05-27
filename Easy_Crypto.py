@@ -13,6 +13,7 @@ from datetime import date
 from EC_functions import print_w
 
 
+
 bitc = 0
 ether = 0
 add10btc = 10
