@@ -73,7 +73,9 @@ welcome3 = (f"\nDuring your time using Easy Crypto, you may encouter an unknown 
 welcome4 = (f"Normally, to get started with this bot, you would need to do ?create to create an account, but i've already done that for you.\n")
 welcome5 = (f"Your account is created so start mining by either ?mb for bitcoin or ?me for ethereum. For more information, ?help is your friend")
 
-bot = Bot(command_prefix='?')
+intents = discord.Intents.default()
+intents.message_content = True
+bot = commands.Bot(command_prefix='?', intents=intents)
 TOKEN = json.loads(open("token.json", "r").read())
 
 def getstockprice(code):
@@ -335,5 +337,6 @@ async def on_message(message):
         embedVar.set_thumbnail(url="https://assets.entrepreneur.com/content/3x2/2000/20191217200727-6Crypto.jpeg")
         embedVar.set_footer(text="Price Compare has not been configured yet")
         await message.reply(embed=embedVar)
+
 
 bot.run(TOKEN)
